@@ -1,5 +1,5 @@
 class_name CombatMovement
-extends Node
+
 
 enum CombatState {
 	IDLE_CENTER,
@@ -27,5 +27,5 @@ var init:CombatState
 var initMid_transitionTime:float
 var mid:CombatState
 
-#@export var midEnd_transitionTime:float
-#@export var end:CombatState
+#var midEnd_transitionTime:float
+#var end:CombatState

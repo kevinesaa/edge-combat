@@ -8,3 +8,6 @@ var s1:CombatMovement = (
 	.setMidMovement(CombatMovement.CombatState.PUNCH_RIGHT)
 	.build()
 )
+
+func _ready() -> void:
+	pass
