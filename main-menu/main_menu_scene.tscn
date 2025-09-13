@@ -1,8 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c60iw1xn4lexb"]
+[gd_scene load_steps=5 format=3 uid="uid://c60iw1xn4lexb"]
 
 [ext_resource type="Texture2D" uid="uid://cg1om34eqscpe" path="res://_placeholders/main_menu_background.png" id="1_5fxsi"]
+[ext_resource type="Script" uid="uid://c5gvijduf2rj0" path="res://main-menu/scripts/MainMenuController.gd" id="1_23gut"]
+[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/ChangeSceneController.gd" id="2_s2c0i"]
+[ext_resource type="Script" uid="uid://wqp1kk0focr3" path="res://main-menu/scripts/MainMenuInputController.gd" id="3_mp5cd"]
 
 [node name="MainMenuNode" type="Node2D"]
+script = ExtResource("1_23gut")
 
 [node name="Node" type="Node" parent="."]
 
@@ -17,3 +21,10 @@ offset_right = 215.0
 offset_bottom = 45.0
 theme_override_font_sizes/font_size = 24
 text = "Soy el menu principal"
+
+[node name="changeSceneController_Node" type="Node" parent="."]
+script = ExtResource("2_s2c0i")
+path_to_next_scene = "res://levels/0001/level_0001_scene.tscn"
+
+[node name="inputController_node" type="Node" parent="."]
+script = ExtResource("3_mp5cd")
