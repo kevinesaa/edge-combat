@@ -14,6 +14,17 @@ config/name="edge-combat"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=480
+
+[input_devices]
+
+pointing/android/enable_long_press_as_right_click=true
+pointing/android/enable_pan_and_scale_gestures=true
+pointing/android/rotary_input_scroll_axis=0
+
 [rendering]
 
 renderer/rendering_method="mobile"
