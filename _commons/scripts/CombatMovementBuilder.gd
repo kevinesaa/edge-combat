@@ -1,5 +1,6 @@
 class_name CombatMovementBuilder
 
+
 var __indexId:int
 var __keyName:String
 var __isCancelMove:bool
