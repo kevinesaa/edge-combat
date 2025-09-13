@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cev8ua1gyrgs2"]
+
+[ext_resource type="Script" uid="uid://dhso15f35skh1" path="res://_commons/scripts/CombatStateMachine.gd" id="1_cq3lf"]
+
+[node name="CombatStateMachine_node" type="Node2D"]
+script = ExtResource("1_cq3lf")

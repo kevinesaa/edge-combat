@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://04mqx5hv4c2v"]
+
+[ext_resource type="Script" uid="uid://buq1d80cjsnjx" path="res://_commons/scripts/CombatMovement.gd" id="1_2uyki"]
+
+[node name="CombatMovement_node" type="Node2D"]
+script = ExtResource("1_2uyki")
