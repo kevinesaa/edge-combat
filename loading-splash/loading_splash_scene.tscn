@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctpwj6rf8gbwp"]
+
+[ext_resource type="Texture2D" uid="uid://cxxnjb7teiq0u" path="res://_placeholders/splash_loading.png" id="1_r40vw"]
+
+[node name="loading_splash_node_scene" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("1_r40vw")

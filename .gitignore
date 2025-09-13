@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=godot,windows,linux,macos
 
 builds/*
+/build
 
 ### Godot ###
 # Godot 4+ specific ignores
@@ -96,3 +97,24 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/godot,windows,linux,macos
+
+# android
+*.iml
+.gradle
+/local.properties
+.idea/*
+/captures
+.externalNativeBuild
+# Built application files
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+bin/
+gen/
+out/
+proguard/
+*.log
+.navigation/
+google-services.json

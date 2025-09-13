@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://s0q06nvnmkr"]
+
+[ext_resource type="Texture2D" uid="uid://w8bh0lq70pju" path="res://_placeholders/sandbox_background.png" id="1_0sue0"]
+[ext_resource type="PackedScene" uid="uid://ob5i1s8uuwsi" path="res://enemies/e_0001/enemyScene0001.tscn" id="2_1qp2y"]
+[ext_resource type="PackedScene" uid="uid://d0xp4m6qxfx43" path="res://player/player_scene.tscn" id="2_d3rbt"]
+
+[node name="LevelSandboxNode" type="Node2D"]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node"]
+z_index = -1
+position = Vector2(320, 180)
+texture = ExtResource("1_0sue0")
+
+[node name="Label" type="Label" parent="Node"]
+offset_left = 40.0
+offset_top = 16.0
+offset_right = 230.0
+offset_bottom = 39.0
+text = "soy el nivel sandbox-test"
+
+[node name="enemy_node_0001" parent="." instance=ExtResource("2_1qp2y")]
+position = Vector2(298, 184)
+
+[node name="PlayerRootNode" parent="." instance=ExtResource("2_d3rbt")]
+position = Vector2(352, 248)

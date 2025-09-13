@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://sqn7fgm45emu"]
+
+[ext_resource type="Texture2D" uid="uid://bykj0eq4043x0" path="res://_placeholders/level_background.png" id="1_hhrrt"]
+
+[node name="LevelNode_0001" type="Node2D"]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node"]
+position = Vector2(320, 180)
+texture = ExtResource("1_hhrrt")
+
+[node name="Label" type="Label" parent="Node"]
+offset_left = 30.0
+offset_top = 2.0
+offset_right = 138.0
+offset_bottom = 25.0
+text = "soy el nivel 01"

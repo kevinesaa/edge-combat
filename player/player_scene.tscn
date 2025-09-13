@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0xp4m6qxfx43"]
+
+[ext_resource type="Texture2D" uid="uid://c5flq5j2qcjra" path="res://_placeholders/player/idle_center.png" id="1_0khpw"]
+
+[node name="PlayerRootNode" type="Node2D"]
+
+[node name="player_Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0khpw")
