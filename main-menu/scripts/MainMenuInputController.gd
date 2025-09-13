@@ -27,11 +27,12 @@ func handledTactilScreen(event: InputEvent):
 		if(event is InputEventScreenDrag):
 			handledDraw(event)
 
-func handledTouch(event: InputEvent):
+
+func handledTouch(event: InputEventScreenTouch):
 	if(event.is_pressed()):
 		print("click/touch")
 	if(event.is_released()):
 		print("realeas: click/touch")
 
-func handledDraw(event: InputEvent):
+func handledDraw(event: InputEventScreenDrag):
 	print("drag")
