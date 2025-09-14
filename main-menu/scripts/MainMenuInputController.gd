@@ -3,7 +3,7 @@ extends Node
 
 enum InputType {
 	CLICK,
-	DOBLE_CLICK,
+	DOUBLE_CLICK,
 	LONG_CLICK,
 	SWIPE
 }
@@ -13,7 +13,7 @@ const CLICK_TIME_MAX = 0.150
 
 const LONG_CLICK_TIME_MIN:float = 0.4
 
-const DOUBLE_CLICK_TIME_MAX:float = 0.2
+
 
 const SWIPE_DISTANCE_MIN:float = 30
 const SQUARE_SWIPE_DISTANCE_MIN:float = SWIPE_DISTANCE_MIN * SWIPE_DISTANCE_MIN
@@ -26,125 +26,124 @@ var TACTIL_SCREEN_EVENTS:Array = (
 )
 
 
-class InputWrapper:
-	static var inputTypesNames={}
+class InputHolder:
+	
+	static var __inputTypesNames = {}
+	
+	static var fingersPressingCount:int = 0
+	static var fingersReleasedCount:int = 0
+	static var fingersDrawingCount:int = 0
+	
+	var isSendLongClick:bool = false
+	var isPressing:bool = false
+	var isDrawing:bool = false
+	
+	var fingerId:int
 	var type:InputType
 	var typeName:String
-	
-	var pressDuration:float = 0
-	var emited:bool = false
-	var continueAddingTime:bool = false
-	var isPrssing:bool = false
-	
-	var isDrawing:bool = false
+	# microseconds
+	var initMomentTime:int
+	var endMomentTime:int
+	var accTimeDuration:float
 	var initPosition:Vector2
 	var endPosition:Vector2
 	
+	static func plusOne(current):
+		var t = current + 1
+		return max(0,t)
 	
+	static func minusOne(current):
+		var t = current - 1
+		return max(0,t)
+		
 	func setType(type:InputType):
 		self.type = type
-		self.typeName = inputTypesNames[type]
+		self.typeName = __inputTypesNames[type]
 	pass
 		
-signal notify_input(input:InputWrapper)
-signal notify_double_click(postion:Vector2)
-signal notify_long_click(position:Vector2)
+signal notify_hold_pressing(event:InputHolder)
 signal notify_click(position:Vector2)
 signal notify_swipe(initPosition:Vector2,endPosition:Vector2)
 
-var runningInputs:Array[InputWrapper] = []
+var runningInputs:Array[InputHolder] = []
 
 func _init() -> void:
-	if(InputWrapper.inputTypesNames == null):
-		var inputTypesNames={}
+	if(InputHolder.__inputTypesNames == null):
+		var __inputTypesNames={}
 		for i in (InputType.values()):
 			var keyName = InputType.find_key(i)
-			inputTypesNames[i] = keyName
-			InputWrapper.inputTypesNames = inputTypesNames
+			__inputTypesNames[i] = keyName
+			InputHolder.__inputTypesNames = __inputTypesNames
 	
 
 func _ready() -> void:
 	runningInputs.resize(10)
 	for i in len(runningInputs):
-		runningInputs[i] = InputWrapper.new()
+		runningInputs[i] = InputHolder.new()
 		
 func _input(event: InputEvent) -> void:
 	
 	if(TACTIL_SCREEN_EVENTS.any(func(t): return is_instance_of(event,t))):
 		handledTactilScreen(event)
 		
-func _process(delta: float) -> void:
+func _process(deltaTime: float) -> void:
 	
 	for event in runningInputs:
 		
-		if( event.emited):
-			event.emited = false
-			continue
-		
-		if(!event.continueAddingTime):
-			continue
-		
-		event.pressDuration += delta
-		if(!event.isDrawing):
+		if(event.isPressing):
+			event.accTimeDuration += deltaTime
+			notify_hold_pressing.emit(event)
+			if(!event.isSendLongClick):
+				event.isSendLongClick = true
 			
-			var e : InputWrapper
-			if(event.pressDuration >= LONG_CLICK_TIME_MIN):
-				e = sendEvent(event,InputType.LONG_CLICK)
-				notify_long_click.emit(e.initPosition)
-				continue
-			
-			if(event.pressDuration >= CLICK_TIME_MIN && event.pressDuration <= CLICK_TIME_MAX):
-				e = sendEvent(event,InputType.CLICK)
-				notify_click.emit(e.initPosition)
-				continue
-		
 
-func sendEvent(event:InputWrapper,type:InputType):
-	event.setType(type)
-	notify_input.emit(event)
-	event.continueAddingTime = false
-	event.emited = true
-	event.pressDuration = 0
-	
-	return event
 
 func handledTactilScreen(event: InputEvent):
 	
-	if( event.index == 0 ):
-		
-		if(event is InputEventScreenDrag):
-			handledDraw(event)
-		
-		if(event is InputEventScreenTouch):
-			handledTouch(event)
+	if(event is InputEventScreenDrag):
+		handledDraw(event)
+	
+	if(event is InputEventScreenTouch):
+		handledTouch(event)
 		
 
-var t
+
 func handledTouch(event: InputEventScreenTouch):
 	var wrapper = runningInputs[event.index]
-	var e : InputWrapper
-	if(event.double_tap):
-		wrapper.pressDuration = DOUBLE_CLICK_TIME_MAX
-		wrapper.setType(InputType.DOBLE_CLICK)
-		e = sendEvent(wrapper,InputType.DOBLE_CLICK )
-		notify_double_click.emit(e.initPosition)
-		
+	
+	
+	wrapper.fingerId = event.index + 1
+	
 	if(event.is_pressed()):
-		Time.get_unix_time_from_system()
+		InputHolder.fingersPressingCount = InputHolder.plusOne(InputHolder.fingersPressingCount)
+		InputHolder.fingersReleasedCount = InputHolder.minusOne(InputHolder.fingersReleasedCount)
+		wrapper.isPressing = true
 		wrapper.initPosition = event.position
-		wrapper.continueAddingTime = true
+		
+		wrapper.initMomentTime = Time.get_ticks_msec()
+		
 		
 	if(event.is_released()):
+		wrapper.isPressing = false
 		wrapper.endPosition = event.position
+		wrapper.endMomentTime = Time.get_ticks_msec()
+		
+		if(event.double_tap):
+			pass
+		
 		if(wrapper.isDrawing):
 			
 			var distance = (wrapper.endPosition - wrapper.initPosition).length_squared()
 			if(distance >= SQUARE_SWIPE_DISTANCE_MIN):
-				e = sendEvent(wrapper,InputType.SWIPE)
-				notify_swipe.emit(e.initPosition,e.endPosition)
+				
+				notify_swipe.emit(wrapper.initPosition,wrapper.endPosition)
 		
+		wrapper.isSendLongClick = false
+		wrapper.accTimeDuration = 0
 		wrapper.isDrawing = false
 		
 func handledDraw(event: InputEventScreenDrag):
 	var wrapper = runningInputs[event.index]
 	wrapper.isDrawing = true
+	wrapper.endPosition = event.position 
+	InputHolder.fingersDrawingCount = InputHolder.plusOne(InputHolder.fingersDrawingCount)
