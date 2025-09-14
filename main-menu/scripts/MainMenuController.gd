@@ -1,2 +1,53 @@
 extends Node
 @onready var input_controller_node: MainMenuInputController = $inputController_node
+
+
+var screen_size:Vector2
+var center_screen:Vector2
+@onready var center_vertical_line_2d: Line2D = $Node/center_vertical_Line2D
+@onready var center_horizontal_line_2d: Line2D = $Node/center_horizontal_Line2D
+
+@export var debug_draw:bool = true
+func draw_debug_lines() -> void:
+	if(debug_draw):
+		center_vertical_line_2d.clear_points()
+		center_vertical_line_2d.add_point(Vector2(center_screen.x,0))
+		center_vertical_line_2d.add_point(Vector2(center_screen.x,screen_size.y))
+		
+		center_horizontal_line_2d.clear_points()
+		center_horizontal_line_2d.add_point(Vector2(0,center_screen.y))
+		center_horizontal_line_2d.add_point(Vector2(screen_size.x,center_screen.y))
+
+func on_resize_screen_listener() -> void:
+	print("on resize")
+	calc_center_screen()
+	draw_debug_lines()
+
+
+func on_click_listener(input:MainMenuInputController.InputWrapper) -> void:
+	print("simple click")
+
+func on_double_click_listener(input:MainMenuInputController.InputWrapper) -> void:
+	print("double click")
+
+func on_long_click_listener(input:MainMenuInputController.InputWrapper) -> void:
+	print("long click")
+
+func on_swipe_listener(input:MainMenuInputController.InputWrapper) -> void:
+	print("swipe")
+
+			
+func _ready() -> void:
+	calc_center_screen()
+	draw_debug_lines() 
+	get_viewport().size_changed.connect(on_resize_screen_listener)
+	
+	input_controller_node.notify_click.connect(on_click_listener)
+	input_controller_node.notify_double_click.connect(on_double_click_listener)
+	input_controller_node.notify_long_click.connect(on_long_click_listener)
+	input_controller_node.notify_swipe.connect(on_swipe_listener)
+	
+func calc_center_screen():
+	var viewport = get_viewport()
+	screen_size = viewport.size
+	center_screen = screen_size / 2
