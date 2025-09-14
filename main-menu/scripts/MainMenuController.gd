@@ -24,16 +24,16 @@ func on_resize_screen_listener() -> void:
 	draw_debug_lines()
 
 
-func on_click_listener(input:MainMenuInputController.InputWrapper) -> void:
+func on_click_listener(position:Vector2) -> void:
 	print("simple click")
 
-func on_double_click_listener(input:MainMenuInputController.InputWrapper) -> void:
+func on_double_click_listener(position:Vector2) -> void:
 	print("double click")
 
-func on_long_click_listener(input:MainMenuInputController.InputWrapper) -> void:
+func on_long_click_listener(position:Vector2) -> void:
 	print("long click")
 
-func on_swipe_listener(input:MainMenuInputController.InputWrapper) -> void:
+func on_swipe_listener(initPosition:Vector2,endPosition:Vector2) -> void:
 	print("swipe")
 
 			
