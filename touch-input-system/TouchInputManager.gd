@@ -32,13 +32,14 @@ const SQUARE_SWIPE_DISTANCE_MIN:float = SWIPE_DISTANCE_MIN * SWIPE_DISTANCE_MIN
 
 signal notify_hold_pressing(event:InputWrapper)
 signal notify_click(event:InputWrapper)
+signal notify_double_click(event:InputWrapper)
 signal notify_long_click(event:InputWrapper)
 signal notify_swipe(event:InputWrapper)
 signal notify_long_swipe(event:InputWrapper)
 
 #endregion
 
-var inputBefore:InputWrapper
+var beforeInputs:Array[InputWrapper] = []
 var runningInputs:Array[InputWrapper] = []
 
 func _init() -> void:
@@ -52,6 +53,8 @@ func _init() -> void:
 
 func _ready() -> void:
 	runningInputs.resize(10)
+	beforeInputs.resize(10)
+	beforeInputs.fill(null)
 	for i in len(runningInputs):
 		runningInputs[i] = InputWrapper.new()
 		
@@ -94,6 +97,7 @@ func handledTactilScreen(event: InputEvent):
 func handledTouch(event: InputEventScreenTouch):
 	
 	var wrapper = runningInputs[event.index]
+	var inputBefore = beforeInputs[event.index]
 	wrapper.fingerId = event.index + 1
 	
 	if(event.is_pressed()):
@@ -119,8 +123,10 @@ func handledTouch(event: InputEventScreenTouch):
 		
 		if(event.double_tap):
 			inputBefore = null
-			pass
-		
+			beforeInputs[event.index] = null
+			wrapper.setType(InputWrapper.InputType.DOUBLE_CLICK)
+			notify_double_click.emit(wrapper)
+			
 		if(wrapper.isDrawing):
 			
 			var distance = (wrapper.endPosition - wrapper.initPosition).length_squared()
