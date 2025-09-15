@@ -27,7 +27,8 @@ func on_resize_screen_listener() -> void:
 func on_click_listener(event:InputWrapper) -> void:
 	print("simple click")
 
-
+func on_double_click_listener(event:InputWrapper) -> void:
+	print("double click")
 
 func on_long_click_listener(event:InputWrapper) -> void:
 	print("long click")
@@ -42,6 +43,7 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(on_resize_screen_listener)
 	
 	input_controller_node.notify_click.connect(on_click_listener)
+	input_controller_node.notify_double_click.connect(on_double_click_listener)
 	input_controller_node.notify_long_click.connect(on_long_click_listener)
 	input_controller_node.notify_swipe.connect(on_swipe_listener)
 	
