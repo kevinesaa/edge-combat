@@ -1,5 +1,5 @@
 extends Node
-@onready var input_controller_node: MainMenuInputController = $inputController_node
+@onready var input_controller_node: TouchInputManager = $inputController_node
 
 
 var screen_size:Vector2
@@ -24,15 +24,15 @@ func on_resize_screen_listener() -> void:
 	draw_debug_lines()
 
 
-func on_click_listener(position:Vector2) -> void:
+func on_click_listener(event:InputWrapper) -> void:
 	print("simple click")
 
 
 
-func on_long_click_listener(position:Vector2) -> void:
+func on_long_click_listener(event:InputWrapper) -> void:
 	print("long click")
 
-func on_swipe_listener(initPosition:Vector2,endPosition:Vector2) -> void:
+func on_swipe_listener(event:InputWrapper) -> void:
 	print("swipe")
 
 			

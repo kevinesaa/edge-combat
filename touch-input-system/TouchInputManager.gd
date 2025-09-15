@@ -1,0 +1,140 @@
+class_name TouchInputManager
+extends Node
+
+var TACTIL_SCREEN_EVENTS:Array = (
+	[
+		InputEventScreenTouch, 
+		InputEventScreenDrag
+	]
+)
+
+const SECOND_AS_MILISECOND  = 1000
+const SECOND_AS_MICROSECOND = 1000000
+
+
+enum InputType {
+	CLICK,
+	DOUBLE_CLICK,
+	LONG_CLICK,
+	SWIPE,
+	LONG_SWIPE
+}
+
+const CLICK_TIME_MIN = 0.025
+const CLICK_TIME_MAX = 0.150
+
+const LONG_CLICK_TIME_MIN:float = 0.4
+
+const SWIPE_DISTANCE_MIN:float = 30
+const SQUARE_SWIPE_DISTANCE_MIN:float = SWIPE_DISTANCE_MIN * SWIPE_DISTANCE_MIN
+
+#region notification signals
+
+signal notify_hold_pressing(event:InputWrapper)
+signal notify_click(event:InputWrapper)
+signal notify_long_click(event:InputWrapper)
+signal notify_swipe(event:InputWrapper)
+signal notify_long_swipe(event:InputWrapper)
+
+#endregion
+
+var inputBefore:InputWrapper
+var runningInputs:Array[InputWrapper] = []
+
+func _init() -> void:
+	if(InputWrapper.__inputTypesNames == null):
+		var __inputTypesNames={}
+		for i in (InputType.values()):
+			var keyName = InputType.find_key(i)
+			__inputTypesNames[i] = keyName
+			InputWrapper.__inputTypesNames = __inputTypesNames
+	
+
+func _ready() -> void:
+	runningInputs.resize(10)
+	for i in len(runningInputs):
+		runningInputs[i] = InputWrapper.new()
+		
+func _input(event: InputEvent) -> void:
+	
+	if(TACTIL_SCREEN_EVENTS.any(func(t): return is_instance_of(event,t))):
+		handledTactilScreen(event)
+		
+func _process(deltaTime: float) -> void:
+	
+	for event in runningInputs:
+		
+		if(event.isPressing):
+			event.accTimeDuration += deltaTime
+			notify_hold_pressing.emit(event)
+			
+			if(
+				!event.isSendLongTime 
+				&& event.accTimeDuration >= LONG_CLICK_TIME_MIN
+			):
+				event.isSendLongTime = true
+				if(event.isDrawing):
+					event.setType(InputWrapper.InputType.LONG_SWIPE)
+					notify_long_swipe.emit(event)
+				else:
+					event.setType(InputWrapper.InputType.LONG_CLICK)
+					notify_long_click.emit(event)
+
+
+func handledTactilScreen(event: InputEvent):
+	
+	if(event is InputEventScreenDrag):
+		handledDraw(event)
+	
+	if(event is InputEventScreenTouch):
+		handledTouch(event)
+		
+
+
+func handledTouch(event: InputEventScreenTouch):
+	
+	var wrapper = runningInputs[event.index]
+	wrapper.fingerId = event.index + 1
+	
+	if(event.is_pressed()):
+		
+		if(inputBefore == null):
+			inputBefore = wrapper
+		
+		InputWrapper.fingersPressingCount = InputWrapper.plusOne(InputWrapper.fingersPressingCount)
+		InputWrapper.fingersReleasedCount = InputWrapper.minusOne(InputWrapper.fingersReleasedCount)
+		wrapper.isPressing = true
+		wrapper.initPosition = event.position
+		
+		wrapper.initMomentTime = Time.get_ticks_msec()
+		
+		
+	if(event.is_released()):
+		InputWrapper.fingersPressingCount = InputWrapper.minusOne(InputWrapper.fingersPressingCount)
+		InputWrapper.fingersDrawingCount = InputWrapper.minusOne(InputWrapper.fingersDrawingCount)
+		InputWrapper.fingersReleasedCount = InputWrapper.plusOne(InputWrapper.fingersReleasedCount)
+		wrapper.isPressing = false
+		wrapper.endPosition = event.position
+		wrapper.endMomentTime = Time.get_ticks_msec()
+		
+		if(event.double_tap):
+			inputBefore = null
+			pass
+		
+		if(wrapper.isDrawing):
+			
+			var distance = (wrapper.endPosition - wrapper.initPosition).length_squared()
+			
+			if(distance >= SQUARE_SWIPE_DISTANCE_MIN && wrapper.accTimeDuration <= LONG_CLICK_TIME_MIN):
+				wrapper.setType(InputWrapper.InputType.SWIPE)
+				notify_swipe.emit(wrapper)
+		
+		wrapper.isSendLongTime = false
+		wrapper.accTimeDuration = 0
+		wrapper.isDrawing = false
+		
+func handledDraw(event: InputEventScreenDrag):
+	var wrapper = runningInputs[event.index]
+	wrapper.isDrawing = true
+	wrapper.endPosition = event.position 
+	InputWrapper.fingersDrawingCount = InputWrapper.plusOne(InputWrapper.fingersDrawingCount)
