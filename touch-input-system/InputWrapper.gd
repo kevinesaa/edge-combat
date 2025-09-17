@@ -19,6 +19,7 @@ static var fingersDrawingCount:int = 0
 var isSendLongTime:bool = false
 var isPressing:bool = false
 var isDoubleClickDetect = false
+var isDrawingStart:bool = false
 var isDrawing:bool = false
 
 var index:int
@@ -28,7 +29,7 @@ var typeName:String
 
 var initMomentTime:int # microseconds
 var endMomentTime:int # microseconds
-var accTimeDuration:float # milliseconds
+var accTimeDuration:float # seconds
 var initPosition:Vector2
 var endPosition:Vector2
 
@@ -44,7 +45,6 @@ func setType(type:InputType):
 	__initTypeNames()
 	self.type = type
 	self.typeName = InputWrapper.__inputTypesNames.get(type,null)
-
 
 func __initTypeNames():
 	if(! InputWrapper.__initTypeName ):

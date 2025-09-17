@@ -3,6 +3,10 @@ extends Node
 
 @export var is_double_click_enable:bool = false
 
+var inputsSendQueue:Array[InputPoolObject] = []
+var inputsPoolQueue:Array[InputPoolObject] = []
+var runningInputs:Array[InputWrapper] = []
+
 var TACTIL_SCREEN_EVENTS:Array = (
 	[
 		InputEventScreenTouch, 
@@ -22,27 +26,103 @@ const SQUARE_SWIPE_DISTANCE_MIN:float = SWIPE_DISTANCE_MIN * SWIPE_DISTANCE_MIN
 
 #region notification signals
 
-signal notify_pressed(event:InputWrapper)
-signal notify_release(event:InputWrapper)
-signal notify_hold_pressing(event:InputWrapper)
-signal notify_draging(event:InputWrapper)
+signal notify_input(event:InputWrapper) #
+signal notify_pressed(event:InputWrapper) #
+signal notify_release(event:InputWrapper) #
+signal notify_draging_start(event:InputWrapper) #
 
-signal notify_click(event:InputWrapper)
-signal notify_double_click(event:InputWrapper)
-signal notify_long_click(event:InputWrapper)
-signal notify_swipe(event:InputWrapper)
+signal notify_click(event:InputWrapper) #
+signal notify_double_click(event:InputWrapper) #
+signal notify_long_click(event:InputWrapper) #
+signal notify_swipe(event:InputWrapper) #
 signal notify_long_swipe(event:InputWrapper)
 
+signal notify_hold_pressing(event:InputWrapper)
+signal notify_draging(event:InputWrapper)
 #endregion
 
 #region signal dispatcher
 
+func dispatchInput(input:InputWrapper) -> InputPoolObject:
+	var inputPool:InputPoolObject = getInputPoolInstance()
+	notify_input.emit(inputPool.input)
+	inputsSendQueue.push_back(inputPool)
+	return inputPool
+
+func dispatchPressed(input:InputWrapper):
+	input.setType(InputWrapper.InputType.UNKNOW)
+	var inputPool = dispatchInput(input)
+	notify_pressed.emit(inputPool.input)
+
+func dispatchRelease(input:InputWrapper):
+	var inputPool = dispatchInput(input)
+	notify_release.emit(inputPool.input)
+	input.isSendLongTime = false
+	input.isDrawingStart = false
+	input.isDrawing = false
+	input.accTimeDuration = 0
+
+func dispatchDragingStart(input:InputWrapper):
+	input.setType(InputWrapper.InputType.UNKNOW)
+	var inputPool = dispatchInput(input)
+	notify_draging_start.emit(inputPool.input)
+
+func dispatchClick(input:InputWrapper):
+	input.setType(InputWrapper.InputType.CLICK)
+	var inputPool = dispatchInput(input)
+	input.isDoubleClickDetect = false
+	notify_click.emit(inputPool.input)
+
+func dispatchDoubleClick(input:InputWrapper):
+	input.setType(InputWrapper.InputType.DOUBLE_CLICK)
+	var inputPool = dispatchInput(input)
+	input.isDoubleClickDetect = false
+	notify_double_click.emit(inputPool.input)
+
+func dispatchLongClick(input:InputWrapper):
+	input.setType(InputWrapper.InputType.LONG_CLICK)
+	input.isSendLongTime = true
+	var inputPool = dispatchInput(input)
+	notify_long_click.emit(inputPool.event)
+
+func dispatchSwipe(input:InputWrapper):
+	var distance = (input.endPosition - input.initPosition).length_squared()
+	if(distance >= SQUARE_SWIPE_DISTANCE_MIN && input.accTimeDuration < LONG_CLICK_TIME_MIN):
+		input.setType(InputWrapper.InputType.SWIPE)
+		var inputPool = dispatchInput(input)
+		notify_swipe.emit(inputPool.input)
+
+func dispatchLongTimeSwipe(input:InputWrapper):
+	var distance = (input.endPosition - input.initPosition).length_squared()
+	if(distance >= SQUARE_SWIPE_DISTANCE_MIN && input.accTimeDuration >= LONG_CLICK_TIME_MIN):
+		input.setType(InputWrapper.InputType.LONG_SWIPE)
+		input.isSendLongTime = true
+		var inputPool = dispatchInput(input)
+		notify_long_swipe.emit(inputPool.input)
+
+func dispatchHoldPressing(input:InputWrapper):
+	notify_hold_pressing.emit(input)
+
+func dispatcDraging(event:InputWrapper):
+	notify_draging.emit(event)
+
 #endregion
 
+func getInputPoolInstance() -> InputPoolObject:
+	var element:InputPoolObject
+	if( len(inputsPoolQueue) > 0):
+		element = inputsPoolQueue.pop_front()
+	else:
+		element = InputPoolObject.new()
+	return element
 
-var runningInputs:Array[InputWrapper] = []
+func initInputPool(element:InputPoolObject, input:InputWrapper):
+	element.timmer = InputPoolObject.CONST_POOLING_TIME
+	element.copyInput(input)
 
 func _ready() -> void:
+	inputsPoolQueue.resize(20)
+	inputsPoolQueue.fill(InputPoolObject.new())
 	runningInputs.resize(15)
 	for i in len(runningInputs):
 		runningInputs[i] = InputWrapper.new()
@@ -61,29 +141,34 @@ func _process(deltaTime: float) -> void:
 			if(!event.isPressing && event.type == InputWrapper.InputType.INTENT_CLICK):
 				
 				if(event.accTimeDuration >= CLICK_TIME_MAX):
-					event.setType(InputWrapper.InputType.CLICK)
-					notify_click.emit(event)
-					event.isDoubleClickDetect = false
+					dispatchClick(event)
 					continue
 				event.accTimeDuration += deltaTime
 			
 		if(event.isPressing):
+			
 			event.accTimeDuration += deltaTime
-			notify_hold_pressing.emit(event)
+			dispatchHoldPressing(event)
 			
 			if(
 				!event.isSendLongTime 
 				&& event.accTimeDuration >= LONG_CLICK_TIME_MIN
 			):
-				event.isSendLongTime = true
+				
 				if(event.isDrawing):
-					event.setType(InputWrapper.InputType.LONG_SWIPE)
-					notify_long_swipe.emit(event)
+					dispatchLongTimeSwipe(event)
 				else:
-					event.setType(InputWrapper.InputType.LONG_CLICK)
-					notify_long_click.emit(event)
-
-
+					dispatchLongClick(event)
+	
+	var queueIndexHelper = len(inputsSendQueue)
+	for i in queueIndexHelper:
+		var e:InputPoolObject = inputsSendQueue.pop_front()
+		e.timmer = e.timmer - deltaTime
+		if(e.timmer >= 0):
+			inputsSendQueue.push_back(e)
+		else:
+			inputsPoolQueue.push_back(e)
+			
 func handledTactilScreen(event: InputEvent):
 	
 	if(event is InputEventScreenDrag):
@@ -105,11 +190,10 @@ func handledTouch(event: InputEventScreenTouch):
 		wrapper.isPressing = true
 		wrapper.initPosition = event.position
 		wrapper.initMomentTime = Time.get_ticks_msec()
-		wrapper.setType(InputWrapper.InputType.UNKNOW)
 		if(is_double_click_enable && event.double_tap):
-			wrapper.setType(InputWrapper.InputType.DOUBLE_CLICK)
 			wrapper.isDoubleClickDetect = true
-		notify_pressed.emit(wrapper)
+		dispatchPressed(wrapper)
+		
 		
 	if(event.is_released()):
 		InputWrapper.fingersPressingCount = InputWrapper.minusOne(InputWrapper.fingersPressingCount)
@@ -121,33 +205,27 @@ func handledTouch(event: InputEventScreenTouch):
 		
 		if(!wrapper.isDrawing && !wrapper.isSendLongTime):
 		
-			if(is_double_click_enable):
+			if(!is_double_click_enable):
+				dispatchClick(wrapper)
+			else:
 				if(!wrapper.isDoubleClickDetect):
 					wrapper.setType(InputWrapper.InputType.INTENT_CLICK)
-			else:
-				wrapper.setType(InputWrapper.InputType.CLICK)
-				notify_click.emit(wrapper)
 				
 		if(wrapper.isDrawing):
-			var distance = (wrapper.endPosition - wrapper.initPosition).length_squared()
-			if(distance >= SQUARE_SWIPE_DISTANCE_MIN && wrapper.accTimeDuration <= LONG_CLICK_TIME_MIN):
-				wrapper.setType(InputWrapper.InputType.SWIPE)
-				notify_swipe.emit(wrapper)
-				
-		if(wrapper.isDoubleClickDetect):
-			wrapper.setType(InputWrapper.InputType.DOUBLE_CLICK)
-			notify_double_click.emit(wrapper)
-			wrapper.isDoubleClickDetect = false
+			dispatchSwipe(wrapper)
 			
-		notify_release.emit(wrapper)
-		wrapper.isSendLongTime = false
-		wrapper.isDrawing = false
-		wrapper.accTimeDuration = 0
+		if(is_double_click_enable && wrapper.isDoubleClickDetect):
+			dispatchDoubleClick(wrapper)
+		
+		dispatchRelease(wrapper)
+		
 
-	
-	
 func handledDraw(event: InputEventScreenDrag):
 	var wrapper = runningInputs[event.index]
 	wrapper.isDrawing = true
 	wrapper.endPosition = event.position 
 	InputWrapper.fingersDrawingCount = InputWrapper.plusOne(InputWrapper.fingersDrawingCount)
+	if(!wrapper.isDrawingStart):
+		wrapper.isDrawingStart = true
+		dispatchDragingStart(wrapper)
+	dispatcDraging(wrapper)
