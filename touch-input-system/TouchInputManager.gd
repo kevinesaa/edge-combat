@@ -1,6 +1,8 @@
 class_name TouchInputManager
 extends Node
 
+@export var is_double_click_enable:bool = false
+
 var TACTIL_SCREEN_EVENTS:Array = (
 	[
 		InputEventScreenTouch, 
@@ -41,7 +43,7 @@ signal notify_long_swipe(event:InputWrapper)
 var runningInputs:Array[InputWrapper] = []
 
 func _ready() -> void:
-	runningInputs.resize(10)
+	runningInputs.resize(15)
 	for i in len(runningInputs):
 		runningInputs[i] = InputWrapper.new()
 		
@@ -54,14 +56,16 @@ func _process(deltaTime: float) -> void:
 	
 	for event in runningInputs:
 		
-		if(!event.isPressing && event.type == InputWrapper.InputType.INTENT_CLICK):
+		if(is_double_click_enable):
 			
-			if(event.accTimeDuration >= CLICK_TIME_MAX):
-				event.setType(InputWrapper.InputType.CLICK)
-				notify_click.emit(event)
-				event.isDoubleClickDetect = false
-				continue
-			event.accTimeDuration += deltaTime
+			if(!event.isPressing && event.type == InputWrapper.InputType.INTENT_CLICK):
+				
+				if(event.accTimeDuration >= CLICK_TIME_MAX):
+					event.setType(InputWrapper.InputType.CLICK)
+					notify_click.emit(event)
+					event.isDoubleClickDetect = false
+					continue
+				event.accTimeDuration += deltaTime
 			
 		if(event.isPressing):
 			event.accTimeDuration += deltaTime
@@ -102,7 +106,7 @@ func handledTouch(event: InputEventScreenTouch):
 		wrapper.initPosition = event.position
 		wrapper.initMomentTime = Time.get_ticks_msec()
 		wrapper.setType(InputWrapper.InputType.UNKNOW)
-		if(event.double_tap):
+		if(is_double_click_enable && event.double_tap):
 			wrapper.setType(InputWrapper.InputType.DOUBLE_CLICK)
 			wrapper.isDoubleClickDetect = true
 		notify_pressed.emit(wrapper)
@@ -115,9 +119,15 @@ func handledTouch(event: InputEventScreenTouch):
 		wrapper.endPosition = event.position
 		wrapper.endMomentTime = Time.get_ticks_msec()
 		
-		if(!wrapper.isDoubleClickDetect && !wrapper.isDrawing && !wrapper.isSendLongTime):
-			wrapper.setType(InputWrapper.InputType.INTENT_CLICK)
-			
+		if(!wrapper.isDrawing && !wrapper.isSendLongTime):
+		
+			if(is_double_click_enable):
+				if(!wrapper.isDoubleClickDetect):
+					wrapper.setType(InputWrapper.InputType.INTENT_CLICK)
+			else:
+				wrapper.setType(InputWrapper.InputType.CLICK)
+				notify_click.emit(wrapper)
+				
 		if(wrapper.isDrawing):
 			var distance = (wrapper.endPosition - wrapper.initPosition).length_squared()
 			if(distance >= SQUARE_SWIPE_DISTANCE_MIN && wrapper.accTimeDuration <= LONG_CLICK_TIME_MIN):

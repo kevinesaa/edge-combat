@@ -36,7 +36,10 @@ func on_long_click_listener(event:InputWrapper) -> void:
 func on_swipe_listener(event:InputWrapper) -> void:
 	print("swipe")
 
-			
+func on_long_swipe_listener(event:InputWrapper) -> void:
+	print("long swipe")
+
+
 func _ready() -> void:
 	calc_center_screen()
 	draw_debug_lines() 
@@ -46,6 +49,7 @@ func _ready() -> void:
 	input_controller_node.notify_double_click.connect(on_double_click_listener)
 	input_controller_node.notify_long_click.connect(on_long_click_listener)
 	input_controller_node.notify_swipe.connect(on_swipe_listener)
+	input_controller_node.notify_long_swipe.connect(on_long_swipe_listener)
 	
 func calc_center_screen():
 	var viewport = get_viewport()
