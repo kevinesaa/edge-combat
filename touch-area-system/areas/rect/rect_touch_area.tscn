@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsf5c3shksako"]
+
+[ext_resource type="Script" uid="uid://b161eqef6apdx" path="res://touch-area-system/areas/rect/RectTouchArea.gd" id="1_y8kfo"]
+
+[node name="rectTouchAreaNode" type="Node"]
+script = ExtResource("1_y8kfo")
+
+[node name="debugDraw" type="Line2D" parent="."]
