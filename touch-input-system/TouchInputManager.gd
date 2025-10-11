@@ -119,9 +119,9 @@ func getInputPoolInstance() -> InputPoolObject:
 	return element
 
 func _ready() -> void:
-	inputsPoolQueue.resize(20)
+	inputsPoolQueue.resize(50)
 	inputsPoolQueue.fill(InputPoolObject.new())
-	runningInputs.resize(15)
+	runningInputs.resize(20)
 	for i in len(runningInputs):
 		runningInputs[i] = InputWrapper.new()
 		
@@ -222,8 +222,8 @@ func handledDraw(event: InputEventScreenDrag):
 	var wrapper = runningInputs[event.index]
 	wrapper.isDrawing = true
 	wrapper.endPosition = event.position 
-	InputWrapper.fingersDrawingCount = InputWrapper.plusOne(InputWrapper.fingersDrawingCount)
 	if(!wrapper.isDrawingStart):
 		wrapper.isDrawingStart = true
+		InputWrapper.fingersDrawingCount = InputWrapper.plusOne(InputWrapper.fingersDrawingCount)
 		dispatchDragingStart(wrapper)
 	dispatcDraging(wrapper)
