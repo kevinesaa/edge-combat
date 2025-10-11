@@ -45,6 +45,8 @@ signal notify_draging(event:InputWrapper)
 
 func dispatchInput(input:InputWrapper) -> InputPoolObject:
 	var inputPool:InputPoolObject = getInputPoolInstance()
+	inputPool.timmer = InputPoolObject.CONST_POOLING_TIME
+	inputPool.copyInput(input)
 	notify_input.emit(inputPool.input)
 	inputsSendQueue.push_back(inputPool)
 	return inputPool
@@ -115,10 +117,6 @@ func getInputPoolInstance() -> InputPoolObject:
 	else:
 		element = InputPoolObject.new()
 	return element
-
-func initInputPool(element:InputPoolObject, input:InputWrapper):
-	element.timmer = InputPoolObject.CONST_POOLING_TIME
-	element.copyInput(input)
 
 func _ready() -> void:
 	inputsPoolQueue.resize(20)

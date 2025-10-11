@@ -4,7 +4,7 @@ static var CONST_POOLING_TIME:float = 100
 var timmer:float = 0
 var input:InputWrapper = InputWrapper.new()
 
-func copyInput(source:InputWrapper):
+func copyInput(source:InputWrapper) -> void:
 	
 	input.isSendLongTime = source.isSendLongTime
 	input.isPressing = source.isPressing
