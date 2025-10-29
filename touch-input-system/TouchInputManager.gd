@@ -85,7 +85,7 @@ func dispatchLongClick(input:InputWrapper):
 	input.setType(InputWrapper.InputType.LONG_CLICK)
 	input.isSendLongTime = true
 	var inputPool = dispatchInput(input)
-	notify_long_click.emit(inputPool.event)
+	notify_long_click.emit(inputPool.input)
 
 func dispatchSwipe(input:InputWrapper):
 	var distance = (input.endPosition - input.initPosition).length_squared()
