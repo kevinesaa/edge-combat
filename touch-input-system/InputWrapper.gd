@@ -27,8 +27,8 @@ var fingerId:int
 var type:InputType = InputType.UNKNOW
 var typeName:String
 
-var initMomentTime:int # microseconds
-var endMomentTime:int # microseconds
+var initMomentTime:int # miliseconds
+var endMomentTime:int # miliseconds
 var accTimeDuration:float # seconds
 var initPosition:Vector2
 var endPosition:Vector2

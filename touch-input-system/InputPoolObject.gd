@@ -1,8 +1,20 @@
 class_name InputPoolObject
-	
+
+
+
 static var CONST_POOLING_TIME:float = 100
+
 var timmer:float = 0
 var input:InputWrapper = InputWrapper.new()
+
+func setupTimeToLive():
+	
+	var startTimeInMicrosecond:float = Time.get_ticks_msec()
+	self.timmer = startTimeInMicrosecond + CONST_POOLING_TIME
+	
+func isTimeOut() -> bool:
+	var currentTime:float = Time.get_ticks_msec()
+	return currentTime >= self.timmer
 
 func copyInput(source:InputWrapper) -> void:
 	

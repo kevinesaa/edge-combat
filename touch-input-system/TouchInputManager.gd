@@ -45,7 +45,7 @@ signal notify_draging(event:InputWrapper)
 
 func dispatchInput(input:InputWrapper) -> InputPoolObject:
 	var inputPool:InputPoolObject = getInputPoolInstance()
-	inputPool.timmer = InputPoolObject.CONST_POOLING_TIME
+	inputPool.setupTimeToLive()
 	inputPool.copyInput(input)
 	notify_input.emit(inputPool.input)
 	inputsSendQueue.push_back(inputPool)
@@ -103,10 +103,12 @@ func dispatchLongTimeSwipe(input:InputWrapper):
 		notify_long_swipe.emit(inputPool.input)
 
 func dispatchHoldPressing(input:InputWrapper):
-	notify_hold_pressing.emit(input)
+	var inputPool = dispatchInput(input)
+	notify_hold_pressing.emit(inputPool.input)
 
-func dispatcDraging(event:InputWrapper):
-	notify_draging.emit(event)
+func dispatcDraging(input:InputWrapper):
+	var inputPool = dispatchInput(input)
+	notify_draging.emit(inputPool.input)
 
 #endregion
 
@@ -119,7 +121,7 @@ func getInputPoolInstance() -> InputPoolObject:
 	return element
 
 func _ready() -> void:
-	inputsPoolQueue.resize(50)
+	inputsPoolQueue.resize(2048)
 	inputsPoolQueue.fill(InputPoolObject.new())
 	runningInputs.resize(20)
 	for i in len(runningInputs):
@@ -159,13 +161,15 @@ func _process(deltaTime: float) -> void:
 					dispatchLongClick(event)
 	
 	var queueIndexHelper = len(inputsSendQueue)
-	for i in queueIndexHelper:
+	if(queueIndexHelper >  0):
 		var e:InputPoolObject = inputsSendQueue.pop_front()
-		e.timmer = e.timmer - deltaTime
-		if(e.timmer >= 0):
-			inputsSendQueue.push_back(e)
-		else:
+		if(e.isTimeOut()):
 			inputsPoolQueue.push_back(e)
+		else:
+			inputsSendQueue.push_front(e)
+			
+	
+		
 			
 func handledTactilScreen(event: InputEvent):
 	
