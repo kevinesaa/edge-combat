@@ -106,7 +106,7 @@ func dispatchHoldPressing(input:InputWrapper):
 	var inputPool = dispatchInput(input)
 	notify_hold_pressing.emit(inputPool.input)
 
-func dispatcDraging(input:InputWrapper):
+func dispatchDraging(input:InputWrapper):
 	var inputPool = dispatchInput(input)
 	notify_draging.emit(inputPool.input)
 
@@ -230,4 +230,4 @@ func handledDraw(event: InputEventScreenDrag):
 		wrapper.isDrawingStart = true
 		InputWrapper.fingersDrawingCount = InputWrapper.plusOne(InputWrapper.fingersDrawingCount)
 		dispatchDragingStart(wrapper)
-	dispatcDraging(wrapper)
+	dispatchDraging(wrapper)
