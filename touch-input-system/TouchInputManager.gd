@@ -167,10 +167,10 @@ func _process(deltaTime: float) -> void:
 			inputsPoolQueue.push_back(e)
 		else:
 			inputsSendQueue.push_front(e)
-			
-	
-		
-			
+
+
+
+
 func handledTactilScreen(event: InputEvent):
 	
 	if(event is InputEventScreenDrag):

@@ -10,7 +10,7 @@ func _init():
 	TouchArea.areaMaxId = TouchArea.areaMaxId + 1
 	self.areaId = TouchArea.areaMaxId
 	self.areaName = str("",self.areaName).strip_edges()
-	if(len(self.areaName)):
+	if(len(self.areaName) < 1):
 		self.areaName = str("touch_area","_", self.areaId)
 
 #abstract
