@@ -1,4 +1,4 @@
-class_name  InputWrapper
+class_name InputWrapper
 
 enum InputType {
 	UNKNOW,
@@ -32,6 +32,13 @@ var endMomentTime:int # miliseconds
 var accTimeDuration:float # seconds
 var initPosition:Vector2
 var endPosition:Vector2
+
+#region custom canvas fields
+var initTouchAreaId:int = -1
+var initTouchAreaName:String
+var endTouchAreaId:int = -1
+var endTouchAreaName:String
+#endregion
 
 static func plusOne(current):
 	var t = current + 1

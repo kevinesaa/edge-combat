@@ -14,5 +14,5 @@ func _init():
 		self.areaName = str("touch_area","_", self.areaId)
 
 #abstract
-func isInside(point:Vector2) -> bool:
+func isVectorInside(point:Vector2) -> bool:
 	return false

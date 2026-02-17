@@ -47,6 +47,7 @@ func dispatchInput(input:InputWrapper) -> InputPoolObject:
 	var inputPool:InputPoolObject = getInputPoolInstance()
 	inputPool.setupTimeToLive()
 	inputPool.copyInput(input)
+	
 	notify_input.emit(inputPool.input)
 	inputsSendQueue.push_back(inputPool)
 	return inputPool
@@ -63,6 +64,10 @@ func dispatchRelease(input:InputWrapper):
 	input.isDrawingStart = false
 	input.isDrawing = false
 	input.accTimeDuration = 0
+	input.initTouchAreaId = -1
+	input.initTouchAreaName = ""
+	input.endTouchAreaId = -1
+	input.endTouchAreaName = ""
 
 func dispatchDragingStart(input:InputWrapper):
 	input.setType(InputWrapper.InputType.UNKNOW)
