@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cenkbjot7aece"]
+
+[ext_resource type="Texture2D" uid="uid://cg1om34eqscpe" path="res://_placeholders/main_menu_background.png" id="1_64kox"]
+[ext_resource type="PackedScene" uid="uid://dxxfe68xspd40" path="res://touch-area-system/event-system/event_canvas_system_container.tscn" id="2_7rjdd"]
+[ext_resource type="PackedScene" uid="uid://drq2dymuoh6oc" path="res://combat-screen-layout-system/combat_layout.tscn" id="3_2eb58"]
+
+[node name="firstCombat_Node" type="Node2D"]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node"]
+position = Vector2(320, 180)
+texture = ExtResource("1_64kox")
+
+[node name="Label" type="Label" parent="Node"]
+offset_left = 49.0
+offset_top = 22.0
+offset_right = 215.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 24
+text = "Soy el primer combate"
+
+[node name="center_horizontal_Line2D" type="Line2D" parent="Node"]
+
+[node name="center_vertical_Line2D" type="Line2D" parent="Node"]
+
+[node name="EventCanvasSystemContainer_Node" parent="." instance=ExtResource("2_7rjdd")]
+
+[node name="CombatLayout_node" parent="EventCanvasSystemContainer_Node" instance=ExtResource("3_2eb58")]

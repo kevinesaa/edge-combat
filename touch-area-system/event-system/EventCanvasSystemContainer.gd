@@ -1,4 +1,4 @@
-class_name  EventCanvasSystemContainer extends Node
+class_name EventCanvasSystemContainer extends Node
 
 var input_controller_node: TouchInputManager
 var canvas_system_node: MyCanvasSystemNode

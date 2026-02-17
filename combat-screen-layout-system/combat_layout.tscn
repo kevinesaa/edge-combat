@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://drq2dymuoh6oc"]
+
+[ext_resource type="Script" uid="uid://b1r8bwiqbu37f" path="res://combat-screen-layout-system/scripts/CombatScreenLayout.gd" id="1_8inrl"]
+[ext_resource type="PackedScene" uid="uid://dsf5c3shksako" path="res://touch-area-system/areas/rect/rect_touch_area.tscn" id="2_pg5kr"]
+
+[node name="CombatLayout_node" type="Node"]
+script = ExtResource("1_8inrl")
+topBarVerticalSize = 30
+
+[node name="topBar_rectTouchAreaNode" parent="." instance=ExtResource("2_pg5kr")]
+areaName = "topBar"
+
+[node name="leftUpButton_rectTouchAreaNode" parent="." instance=ExtResource("2_pg5kr")]
+areaName = "leftUpButton"
+
+[node name="rightUpButton_rectTouchAreaNode" parent="." instance=ExtResource("2_pg5kr")]
+areaName = "rightUpButton"
+
+[node name="leftDownButton_rectTouchAreaNode" parent="." instance=ExtResource("2_pg5kr")]
+areaName = "leftDownButton"
+
+[node name="rightDownButton_rectTouchAreaNode" parent="." instance=ExtResource("2_pg5kr")]
+areaName = "rightDownButton"

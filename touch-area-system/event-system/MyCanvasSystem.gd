@@ -47,7 +47,7 @@ func __markInitArea(event:InputWrapper) -> bool:
 	return result
 	
 func __markEndArea(event:InputWrapper) -> bool:
-	var area = __markInsideArea(event.initPosition)
+	var area = __markInsideArea(event.endPosition)
 	var result = area != null
 	if(result):
 		event.endTouchAreaId = area.areaId

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxxfe68xspd40"]
+
+[ext_resource type="Script" uid="uid://bvoliagcl8jsa" path="res://touch-area-system/event-system/EventCanvasSystemContainer.gd" id="1_4ty4q"]
+[ext_resource type="Script" uid="uid://wqp1kk0focr3" path="res://touch-input-system/TouchInputManager.gd" id="2_r6cth"]
+[ext_resource type="Script" uid="uid://sa0g3vtryjx7" path="res://touch-area-system/event-system/MyCanvasSystem.gd" id="3_itrid"]
+
+[node name="EventCanvasSystemContainer_Node" type="Node"]
+script = ExtResource("1_4ty4q")
+
+[node name="inputController_node" type="Node" parent="."]
+script = ExtResource("2_r6cth")
+
+[node name="MyCanvasSystemNode" type="Node" parent="."]
+script = ExtResource("3_itrid")

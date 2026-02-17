@@ -31,19 +31,23 @@ func draw_debug_lines() -> void:
 func setPosition(leftUpPosition:Vector2):
 	self.leftUpCorner = leftUpPosition
 	calcArea()
+	draw_debug_lines()
 
 func setHorizontalSize(h:float):
 	self.horizontalSize = h
 	calcArea()
+	draw_debug_lines()
 
 func setVeticalSize(v:float):
 	self.verticalSize = v
 	calcArea()
+	draw_debug_lines()
 
 func setSize(h:float,v:float):
 	self.horizontalSize = h
 	self.verticalSize = v
 	calcArea()
+	draw_debug_lines()
 
 func calcArea():
 	var verticalSizeVector:Vector2 = verticalSize * Vector2.DOWN
@@ -66,4 +70,5 @@ func isInside(point:Vector2) -> bool:
 func _ready() -> void:
 	leftUpCorner = Vector2(initLeftCornerPosition)
 	calcArea()
+	draw_debug_lines()
 	

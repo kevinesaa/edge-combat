@@ -8,7 +8,6 @@ extends Node
 
 func _ready() -> void:
 	
-	
 	createFileIfNotExist(Constants.SAVE_FILE_PATH,JSON.stringify({}))
 	var gameState:Dictionary = self.loadJson(Constants.SAVE_FILE_PATH)
 	var tutorialCompleted = gameState.get(Constants.TUTORIAL_COMPLETED_KEY,false)
