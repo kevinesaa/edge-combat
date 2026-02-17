@@ -30,26 +30,34 @@ func setInputManager(inputManager:TouchInputManager):
 func setButtons( buttons:Array[TouchArea] ):
 	self.buttons = buttons
 
-func __markInitArea(event:InputWrapper):
-	
+func __markInsideArea(point:Vector2) -> TouchArea:
+	var area : TouchArea = null
 	for b in buttons:
-		if (b.isVectorInside(event.initPosition)):
-			event.initTouchAreaId = b.areaId
-			event.initTouchAreaName = b.areaName
+		if (b.isInside(point)):
+			area = b
 			break
+	return area
 
-func __markEndArea(event:InputWrapper):
+func __markInitArea(event:InputWrapper) -> bool:
+	var area = __markInsideArea(event.initPosition)
+	var result = area != null
+	if(result):
+		event.initTouchAreaId = area.areaId
+		event.initTouchAreaName = area.areaName
+	return result
 	
-	for b in buttons:
-		if (b.isVectorInside(event.endPosition)):
-			event.endTouchAreaId = b.areaId
-			event.endTouchAreaName = b.areaName
-			break
-			
+func __markEndArea(event:InputWrapper) -> bool:
+	var area = __markInsideArea(event.initPosition)
+	var result = area != null
+	if(result):
+		event.endTouchAreaId = area.areaId
+		event.endTouchAreaName = area.areaName
+	return result
+	
 func on_click_listener(event:InputWrapper) -> void:
-	__markInitArea(event)
-	notify_click.emit(event)
-	print(str("simple click: ",event.initTouchAreaName))
+	if(__markInitArea(event)):
+		notify_click.emit(event)
+		print(str("simple click: ",event.initTouchAreaName))
 
 func on_double_click_listener(event:InputWrapper) -> void:
 	print("double click")
@@ -58,10 +66,10 @@ func on_long_click_listener(event:InputWrapper) -> void:
 	print("long click")
 
 func on_swipe_listener(event:InputWrapper) -> void:
-	__markInitArea(event)
-	__markEndArea(event)
-	notify_swipe.emit(event)
-	print(str("swipe: ",event.initTouchAreaName," to ", event.endTouchAreaName))
+	if(__markInitArea(event)):
+		__markEndArea(event)
+		notify_swipe.emit(event)
+		print(str("swipe: ",event.initTouchAreaName," to ", event.endTouchAreaName))
 
 func on_long_swipe_listener(event:InputWrapper) -> void:
 	print("long swipe")

@@ -2,7 +2,7 @@ class_name InputPoolObject
 
 
 
-static var CONST_POOLING_TIME:float = 100
+static var CONST_POOLING_TIME:float = 5000
 
 var timmer:float = 0
 var input:InputWrapper = InputWrapper.new()

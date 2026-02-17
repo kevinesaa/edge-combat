@@ -53,7 +53,7 @@ func calcArea():
 	rightDownCorner = leftUpCorner + verticalSizeVector + horizontalSizeVector
 	centerPosition = rightDownCorner / 2
 	
-func isVectorInside(point:Vector2) -> bool:
+func isInside(point:Vector2) -> bool:
 	
 	var c1 = point.x > leftUpCorner.x && point.y > leftUpCorner.y
 	var c2 = point.x > leftDownCorner.x && point.y < leftDownCorner.y

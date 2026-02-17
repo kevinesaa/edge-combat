@@ -6,6 +6,8 @@
 
 [node name="loading_splash_node_scene" type="Node2D"]
 script = ExtResource("1_ran4o")
+firstCombatPathScena = "res://levels/00-first-combat/first_combat.tscn"
+mainMenuPathScene = "res://main-menu/main_menu_scene.tscn"
 
 [node name="start_next_scene_Timer" type="Timer" parent="."]
 wait_time = 3.0
