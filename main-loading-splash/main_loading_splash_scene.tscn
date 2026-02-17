@@ -1,18 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctpwj6rf8gbwp"]
 
-[ext_resource type="Script" uid="uid://bf1xitxf8lph4" path="res://loading-splash/SplashController.gd" id="1_bmkdo"]
-[ext_resource type="Texture2D" uid="uid://cxxnjb7teiq0u" path="res://_placeholders/splash_loading.png" id="1_r40vw"]
-[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/ChangeSceneController.gd" id="2_fimkd"]
+[ext_resource type="Script" uid="uid://bf1xitxf8lph4" path="res://main-loading-splash/SplashController.gd" id="1_ran4o"]
+[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/ChangeSceneController.gd" id="2_po02x"]
+[ext_resource type="Texture2D" uid="uid://cxxnjb7teiq0u" path="res://_placeholders/splash_loading.png" id="3_a7sgw"]
 
 [node name="loading_splash_node_scene" type="Node2D"]
-script = ExtResource("1_bmkdo")
+script = ExtResource("1_ran4o")
 
 [node name="start_next_scene_Timer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 
 [node name="changeSceneController_Node" type="Node" parent="."]
-script = ExtResource("2_fimkd")
+script = ExtResource("2_po02x")
 debug_loading = true
 path_to_next_scene = "res://main-menu/main_menu_scene.tscn"
 
@@ -27,7 +27,7 @@ grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/CenterContainer"]
 layout_mode = 2
-texture = ExtResource("1_r40vw")
+texture = ExtResource("3_a7sgw")
 
 [connection signal="timeout" from="start_next_scene_Timer" to="." method="start_next_scene_load"]
 [connection signal="progressing_loading_scene_completed" from="changeSceneController_Node" to="." method="on_next_scene_is_ready_listener"]

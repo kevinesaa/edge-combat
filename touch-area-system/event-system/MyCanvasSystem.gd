@@ -20,7 +20,12 @@ signal notify_swipe(event:InputWrapper) #
 #endregion
 
 func setInputManager(inputManager:TouchInputManager):
+	
+	if(self.inputManager != null):
+		__disconnect_all()
 	self.inputManager = inputManager
+	if(inputManager != null):
+		__connect_all()
 
 func setButtons( buttons:Array[TouchArea] ):
 	self.buttons = buttons
@@ -61,7 +66,11 @@ func on_swipe_listener(event:InputWrapper) -> void:
 func on_long_swipe_listener(event:InputWrapper) -> void:
 	print("long swipe")
 
-	
-func _ready() -> void:
+
+func __connect_all() -> void:
 	inputManager.notify_click.connect(self.on_click_listener)
 	inputManager.notify_swipe.connect(self.on_swipe_listener)
+
+func __disconnect_all() -> void:
+	inputManager.notify_click.disconnect(self.on_click_listener)
+	inputManager.notify_swipe.disconnect(self.on_swipe_listener)

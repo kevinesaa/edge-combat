@@ -35,9 +35,9 @@ var endPosition:Vector2
 
 #region custom canvas fields
 var initTouchAreaId:int = -1
-var initTouchAreaName:String
+var initTouchAreaName:String = ""
 var endTouchAreaId:int = -1
-var endTouchAreaName:String
+var endTouchAreaName:String = ""
 #endregion
 
 static func plusOne(current):
