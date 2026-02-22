@@ -30,6 +30,10 @@ func on_resume_game_listener() -> void:
 	__connectTopbar()
 	hidePauseMenu()
 	#resume game (change game state)
+	
+func on_close_game_listener() -> void:
+	get_tree().quit()
+	
 
 func showPauseMenu() -> void:
 	pause_panel.visible = true

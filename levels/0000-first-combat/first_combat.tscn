@@ -82,3 +82,4 @@ layout_mode = 2
 text = "debug jump"
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/pausePanel/CenterContainer/VBoxContainer/resume_Button" to="." method="on_resume_game_listener"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/pausePanel/CenterContainer/VBoxContainer/closeGame_Button" to="." method="on_close_game_listener"]
