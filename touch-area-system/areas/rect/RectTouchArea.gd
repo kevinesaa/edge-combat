@@ -19,7 +19,10 @@ var centerPosition:Vector2
 @onready var debug_draw_line: Line2D = $debugDraw
 
 func draw_debug_lines() -> void:
-	if(debug_draw):
+	
+	if(!debug_draw):
+		debug_draw_line.clear_points()
+	else:
 		debug_draw_line.clear_points()
 		debug_draw_line.add_point(leftUpCorner)
 		debug_draw_line.add_point(leftDownCorner)
