@@ -4,6 +4,7 @@ extends Node
 static var areaMaxId:int = 0
 var areaId:int
 
+@export var debug_draw:bool = true
 @export var areaName:String
 
 func _init():
@@ -16,3 +17,8 @@ func _init():
 #abstract
 func isInside(point:Vector2) -> bool:
 	return false
+
+#abstract
+func draw_debug_lines() -> void:
+	if(debug_draw):
+		return

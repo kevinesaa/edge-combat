@@ -25,5 +25,6 @@ text = "Soy el primer combate"
 [node name="center_vertical_Line2D" type="Line2D" parent="Node"]
 
 [node name="EventCanvasSystemContainer_Node" parent="." instance=ExtResource("2_7rjdd")]
+debug_draw = false
 
 [node name="CombatLayout_node" parent="EventCanvasSystemContainer_Node" instance=ExtResource("3_2eb58")]

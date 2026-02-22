@@ -15,7 +15,7 @@ var rightDownCorner:Vector2
 var centerPosition:Vector2
 
 
-@export var debug_draw:bool = true
+
 @onready var debug_draw_line: Line2D = $debugDraw
 
 func draw_debug_lines() -> void:
