@@ -33,7 +33,6 @@ func on_resume_game_listener() -> void:
 	
 func on_close_game_listener() -> void:
 	get_tree().quit()
-	
 
 func showPauseMenu() -> void:
 	pause_panel.visible = true
