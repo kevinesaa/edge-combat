@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbes7ks78tifj"]
+
+[ext_resource type="Texture2D" uid="uid://cg1om34eqscpe" path="res://_placeholders/main_menu_background.png" id="1_h33f0"]
+
+[node name="CharacterSelector_node" type="Node2D"]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node"]
+position = Vector2(320, 180)
+texture = ExtResource("1_h33f0")
+
+[node name="Label" type="Label" parent="Node"]
+offset_left = 49.0
+offset_top = 22.0
+offset_right = 215.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 24
+text = "Selector de personajes"
+metadata/_edit_use_anchors_ = true

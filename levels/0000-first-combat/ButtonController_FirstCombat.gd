@@ -57,21 +57,22 @@ func __tierDownDevOptions() -> void:
 	debug_button.pressed.disconnect(__jumpFirstCombat)
 	
 func __jumpFirstCombat() -> void:
-	var fileRaw = FileAccess.open(Constants.SAVE_FILE_PATH, FileAccess.READ)
-	var fileContent = JSON.parse_string(fileRaw.get_as_text())
-	fileRaw.close()
-	fileContent[Constants.TUTORIAL_COMPLETED_KEY] = true
-	fileRaw = FileAccess.open(Constants.SAVE_FILE_PATH, FileAccess.WRITE)
-	fileRaw.store_string(JSON.stringify(fileContent))
-	fileRaw.close()
-	change_scene_controller_node.debug_loading = true
-	change_scene_controller_node.load_next_scene()
-	(change_scene_controller_node
-		.progressing_loading_scene_completed
-		.connect(
-			func():change_scene_controller_node.change_scene()
+	if(!change_scene_controller_node.is_loading_next_scene):
+		var fileRaw = FileAccess.open(Constants.SAVE_FILE_PATH, FileAccess.READ)
+		var fileContent = JSON.parse_string(fileRaw.get_as_text())
+		fileRaw.close()
+		fileContent[Constants.TUTORIAL_COMPLETED_KEY] = true
+		fileRaw = FileAccess.open(Constants.SAVE_FILE_PATH, FileAccess.WRITE)
+		fileRaw.store_string(JSON.stringify(fileContent))
+		fileRaw.close()
+		change_scene_controller_node.debug_loading = true
+		change_scene_controller_node.load_next_scene()
+		(change_scene_controller_node
+			.progressing_loading_scene_completed
+			.connect(
+				func():change_scene_controller_node.change_scene()
+			)
 		)
-	)
 	
 func __connectTopbar() -> void:
 	var customCanvas = event_canvas_system_container_node.canvas_system_node

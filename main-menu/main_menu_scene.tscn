@@ -20,6 +20,7 @@ offset_right = 215.0
 offset_bottom = 45.0
 theme_override_font_sizes/font_size = 24
 text = "Soy el menu principal"
+metadata/_edit_use_anchors_ = true
 
 [node name="changeSceneController_Node" type="Node" parent="."]
 script = ExtResource("2_s2c0i")
@@ -27,46 +28,53 @@ path_to_next_scene = "res://levels/0001/level_0001_scene.tscn"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+[node name="mainMenu_PanelContainer" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 0.4
 anchor_bottom = 1.0
 grow_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/mainMenu_PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/mainMenu_PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="storyMode_Button" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="storyMode_Button" type="Button" parent="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Story mode"
 
-[node name="arcadeMode_Button" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="arcadeMode_Button" type="Button" parent="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Arcade mode"
 
-[node name="trainingMode_Button" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="trainingMode_Button" type="Button" parent="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Training mode"
 
-[node name="settings_Button" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="settings_Button" type="Button" parent="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Settings"
 
-[node name="credits_Button" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="credits_Button" type="Button" parent="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Credits
 "
 
-[node name="exit_Button" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="exit_Button" type="Button" parent="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Close game
 "
+
+[connection signal="pressed" from="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer/storyMode_Button" to="." method="on_story_click_listener"]
+[connection signal="pressed" from="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer/arcadeMode_Button" to="." method="on_arcade_story_click_listener"]
+[connection signal="pressed" from="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer/trainingMode_Button" to="." method="on_training_mode_click_listener"]
+[connection signal="pressed" from="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer/settings_Button" to="." method="on_setting_click_listener"]
+[connection signal="pressed" from="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer/credits_Button" to="." method="on_credits_click_listener"]
+[connection signal="pressed" from="CanvasLayer/mainMenu_PanelContainer/MarginContainer/VBoxContainer/exit_Button" to="." method="on_exit_click_listener"]
