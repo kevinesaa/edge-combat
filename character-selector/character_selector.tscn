@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbes7ks78tifj"]
+[gd_scene load_steps=4 format=3 uid="uid://dbes7ks78tifj"]
 
 [ext_resource type="Texture2D" uid="uid://cg1om34eqscpe" path="res://_placeholders/main_menu_background.png" id="1_h33f0"]
+[ext_resource type="Script" uid="uid://cs7uod58crab5" path="res://character-selector/CharacterSelector.gd" id="1_mv477"]
+[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/ChangeSceneController.gd" id="3_tonqw"]
 
 [node name="CharacterSelector_node" type="Node2D"]
+script = ExtResource("1_mv477")
 
 [node name="Node" type="Node" parent="."]
 
@@ -11,10 +14,99 @@ position = Vector2(320, 180)
 texture = ExtResource("1_h33f0")
 
 [node name="Label" type="Label" parent="Node"]
-offset_left = 49.0
-offset_top = 22.0
-offset_right = 215.0
-offset_bottom = 45.0
+offset_left = 4.0
+offset_top = 329.0
+offset_right = 266.0
+offset_bottom = 363.0
 theme_override_font_sizes/font_size = 24
 text = "Selector de personajes"
 metadata/_edit_use_anchors_ = true
+
+[node name="changeSceneController_Node" type="Node" parent="."]
+script = ExtResource("3_tonqw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="leftContainerControl" type="Control" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HBoxContainer/leftContainerControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 8.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/leftContainerControl/MarginContainer"]
+layout_mode = 2
+
+[node name="back_Button" type="Button" parent="CanvasLayer/HBoxContainer/leftContainerControl/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="topSeparatorControl" type="Control" parent="CanvasLayer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/HBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="bottomSeparatorControl" type="Control" parent="CanvasLayer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="rigthContainerControl" type="Control" parent="CanvasLayer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/HBoxContainer/rigthContainerControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 8.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/rigthContainerControl/MarginContainer"]
+layout_mode = 2
+
+[node name="confirm_Button" type="Button" parent="CanvasLayer/HBoxContainer/rigthContainerControl/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Confirm"
+
+[node name="confirm_ia_Button" type="Button" parent="CanvasLayer/HBoxContainer/rigthContainerControl/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Confirm IA"
+
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/leftContainerControl/MarginContainer/VBoxContainer/back_Button" to="." method="on_back_press_click_listener"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/rigthContainerControl/MarginContainer/VBoxContainer/confirm_Button" to="." method="on_confirm_character_click_listener"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/rigthContainerControl/MarginContainer/VBoxContainer/confirm_ia_Button" to="." method="on_confirm_ia_character_click_listener"]

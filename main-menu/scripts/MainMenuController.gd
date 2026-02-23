@@ -20,7 +20,7 @@ func on_arcade_story_click_listener() -> void:
 			)
 		)
 
-func on_training_mode_click_listener()-> void:
+func on_training_mode_click_listener() -> void:
 	
 	if(!change_scene_controller_node.is_loading_next_scene):
 		
@@ -33,13 +33,13 @@ func on_training_mode_click_listener()-> void:
 			)
 		)
 
-func on_setting_click_listener()-> void:
+func on_setting_click_listener() -> void:
 	pass
 
-func on_credits_click_listener()-> void:
+func on_credits_click_listener() -> void:
 	pass
 
-func on_exit_click_listener()-> void:
+func on_exit_click_listener() -> void:
 	get_tree().quit()
 
 
