@@ -1,4 +1,5 @@
-class_name ButtonController_FirstCombat extends Node
+extends CustomScene
+
 
 #region dev option and debug
 @export var dev_options:bool
@@ -31,8 +32,6 @@ func on_resume_game_listener() -> void:
 	hidePauseMenu()
 	#resume game (change game state)
 	
-func on_close_game_listener() -> void:
-	get_tree().quit()
 
 func showPauseMenu() -> void:
 	pause_panel.visible = true
@@ -50,27 +49,21 @@ func __devOptionsSetting() -> void:
 		
 func __setupDevOption() -> void:
 	debug_button.visible = true
-	debug_button.pressed.connect(__jumpFirstCombat)
+	debug_button.pressed.connect(__jumpCombat)
 	
 func __tierDownDevOptions() -> void:
 	debug_button.visible = false
-	debug_button.pressed.disconnect(__jumpFirstCombat)
+	debug_button.pressed.disconnect(__jumpCombat)
 	
-func __jumpFirstCombat() -> void:
+func __jumpCombat() -> void:
+	
 	if(!change_scene_controller_node.is_loading_next_scene):
-		var fileRaw = FileAccess.open(Constants.SAVE_FILE_PATH, FileAccess.READ)
-		var fileContent = JSON.parse_string(fileRaw.get_as_text())
-		fileRaw.close()
-		fileContent[Constants.TUTORIAL_COMPLETED_KEY] = true
-		fileRaw = FileAccess.open(Constants.SAVE_FILE_PATH, FileAccess.WRITE)
-		fileRaw.store_string(JSON.stringify(fileContent))
-		fileRaw.close()
-		change_scene_controller_node.debug_loading = true
+		
 		change_scene_controller_node.load_next_scene()
 		(change_scene_controller_node
 			.progressing_loading_scene_completed
 			.connect(
-				func():change_scene_controller_node.change_scene()
+				func():change_scene_controller_node.change_scene({})
 			)
 		)
 	
@@ -81,10 +74,9 @@ func __connectTopbar() -> void:
 func __disconnectTopBar() -> void:
 	var customCanvas = event_canvas_system_container_node.canvas_system_node
 	customCanvas.notify_click.disconnect(on_touch_listener)
-
-func _ready() -> void:
 	
+func _ready() -> void:
+	super._ready()
 	__connectTopbar()
 	hidePauseMenu()
 	__devOptionsSetting()
-	

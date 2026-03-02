@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cenkbjot7aece"]
 
-[ext_resource type="Script" uid="uid://2pgro1hwa0kc" path="res://levels/0000-first-combat/ButtonController_FirstCombat.gd" id="1_7rjdd"]
+[ext_resource type="Script" uid="uid://2pgro1hwa0kc" path="res://first-combat/ButtonController_FirstCombat.gd" id="1_7rjdd"]
 [ext_resource type="Texture2D" uid="uid://cg1om34eqscpe" path="res://_placeholders/main_menu_background.png" id="1_64kox"]
-[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/ChangeSceneController.gd" id="2_2eb58"]
+[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/scene-manager/ChangeSceneController.gd" id="2_2eb58"]
 [ext_resource type="PackedScene" uid="uid://dxxfe68xspd40" path="res://touch-area-system/event-system/event_canvas_system_container.tscn" id="2_7rjdd"]
 [ext_resource type="PackedScene" uid="uid://drq2dymuoh6oc" path="res://combat-screen-layout-system/combat_layout.tscn" id="3_2eb58"]
 

@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://c17o7nouhttfg"]
+
+[ext_resource type="Script" uid="uid://bj6bqtus6vpal" path="res://combat-arcade-mode/ArcadeModeCombat.gd" id="1_en656"]
+[ext_resource type="Texture2D" uid="uid://cg1om34eqscpe" path="res://_placeholders/main_menu_background.png" id="2_3rj2g"]
+[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/scene-manager/ChangeSceneController.gd" id="3_kljot"]
+[ext_resource type="PackedScene" uid="uid://dxxfe68xspd40" path="res://touch-area-system/event-system/event_canvas_system_container.tscn" id="4_6xpvl"]
+[ext_resource type="PackedScene" uid="uid://drq2dymuoh6oc" path="res://combat-screen-layout-system/combat_layout.tscn" id="5_08l7s"]
+
+[node name="arcardeMode_node" type="Node2D"]
+script = ExtResource("1_en656")
+dev_options = true
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node"]
+position = Vector2(320, 180)
+texture = ExtResource("2_3rj2g")
+
+[node name="Label" type="Label" parent="Node"]
+offset_left = 4.0
+offset_top = 329.0
+offset_right = 266.0
+offset_bottom = 363.0
+theme_override_font_sizes/font_size = 24
+text = "combate arcade"
+metadata/_edit_use_anchors_ = true
+
+[node name="changeSceneController_Node" type="Node" parent="."]
+script = ExtResource("3_kljot")
+debug_loading = true
+path_to_next_scene = "res://character-selector/character_selector.tscn"
+
+[node name="EventCanvasSystemContainer_Node" parent="." instance=ExtResource("4_6xpvl")]
+debug_draw = false
+
+[node name="CombatLayout_node" parent="EventCanvasSystemContainer_Node" instance=ExtResource("5_08l7s")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+
+[node name="topbar_Container" type="CenterContainer" parent="CanvasLayer/VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="topbar_Label" type="Label" parent="CanvasLayer/VBoxContainer/PanelContainer/topbar_Container"]
+layout_mode = 2
+text = "pause"
+
+[node name="pausePanel" type="Panel" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/VBoxContainer/pausePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/pausePanel/CenterContainer"]
+layout_mode = 2
+
+[node name="resume_Button" type="Button" parent="CanvasLayer/VBoxContainer/pausePanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resume
+"
+
+[node name="debug_Button" type="Button" parent="CanvasLayer/VBoxContainer/pausePanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "debug jump"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/pausePanel/CenterContainer/VBoxContainer/resume_Button" to="." method="on_resume_game_listener"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cg1om34eqscpe" path="res://_placeholders/main_menu_background.png" id="1_h33f0"]
 [ext_resource type="Script" uid="uid://cs7uod58crab5" path="res://character-selector/CharacterSelector.gd" id="1_mv477"]
-[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/ChangeSceneController.gd" id="3_tonqw"]
+[ext_resource type="Script" uid="uid://qogeq311e7v2" path="res://_commons/scripts/scene-manager/ChangeSceneController.gd" id="3_tonqw"]
 
 [node name="CharacterSelector_node" type="Node2D"]
 script = ExtResource("1_mv477")
