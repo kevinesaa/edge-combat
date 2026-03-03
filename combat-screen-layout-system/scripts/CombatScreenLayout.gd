@@ -6,12 +6,12 @@ extends Node
 var screen_size:Vector2
 var center_screen:Vector2
 
-@onready var top_bar_rect_touch_area_node: ReactTouchArea = $topBar_rectTouchAreaNode
+@onready var top_bar_rect_touch_area_node: RectTouchArea = $topBar_rectTouchAreaNode
 
-@onready var left_up_button_rect_touch_area_node: ReactTouchArea = $leftUpButton_rectTouchAreaNode
-@onready var right_up_button_rect_touch_area_node: ReactTouchArea = $rightUpButton_rectTouchAreaNode
-@onready var left_down_button_rect_touch_area_node: ReactTouchArea = $leftDownButton_rectTouchAreaNode
-@onready var right_down_button_rect_touch_area_node: ReactTouchArea = $rightDownButton_rectTouchAreaNode
+@onready var left_up_button_rect_touch_area_node: RectTouchArea = $leftUpButton_rectTouchAreaNode
+@onready var right_up_button_rect_touch_area_node: RectTouchArea = $rightUpButton_rectTouchAreaNode
+@onready var left_down_button_rect_touch_area_node: RectTouchArea = $leftDownButton_rectTouchAreaNode
+@onready var right_down_button_rect_touch_area_node: RectTouchArea = $rightDownButton_rectTouchAreaNode
 
 
 func on_resize_screen_listener() -> void:

@@ -1,4 +1,4 @@
-class_name ReactTouchArea
+class_name RectTouchArea
 extends TouchArea
 
 @export var initLeftCornerPosition:Vector2
