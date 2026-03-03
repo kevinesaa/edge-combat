@@ -60,6 +60,7 @@ func dispatchPressed(input:InputWrapper):
 func dispatchRelease(input:InputWrapper):
 	var inputPool = dispatchInput(input)
 	notify_release.emit(inputPool.input)
+	input.isDoubleClickDetect = false
 	input.isSendLongTime = false
 	input.isDrawingStart = false
 	input.isDrawing = false
@@ -77,8 +78,8 @@ func dispatchDragingStart(input:InputWrapper):
 func dispatchClick(input:InputWrapper):
 	input.setType(InputWrapper.InputType.CLICK)
 	var inputPool = dispatchInput(input)
-	input.isDoubleClickDetect = false
 	notify_click.emit(inputPool.input)
+	input.isDoubleClickDetect = false
 
 func dispatchDoubleClick(input:InputWrapper):
 	input.setType(InputWrapper.InputType.DOUBLE_CLICK)
@@ -119,15 +120,18 @@ func dispatchDraging(input:InputWrapper):
 
 func getInputPoolInstance() -> InputPoolObject:
 	var element:InputPoolObject
-	if( len(inputsPoolQueue) > 0):
-		element = inputsPoolQueue.pop_front()
-	else:
+	if( inputsPoolQueue.is_empty()):
 		element = InputPoolObject.new()
+	else:
+		element = inputsPoolQueue.pop_front()
 	return element
 
 func _ready() -> void:
+	
 	inputsPoolQueue.resize(2048)
-	inputsPoolQueue.fill(InputPoolObject.new())
+	for j in len(inputsPoolQueue):
+		inputsPoolQueue[j] = InputPoolObject.new()
+	
 	runningInputs.resize(20)
 	for i in len(runningInputs):
 		runningInputs[i] = InputWrapper.new()
@@ -165,8 +169,8 @@ func _process(deltaTime: float) -> void:
 				else:
 					dispatchLongClick(event)
 	
-	var queueIndexHelper = len(inputsSendQueue)
-	if(queueIndexHelper >  0):
+	
+	if(!inputsSendQueue.is_empty()):
 		var e:InputPoolObject = inputsSendQueue.pop_front()
 		if(e.isTimeOut()):
 			inputsPoolQueue.push_back(e)
