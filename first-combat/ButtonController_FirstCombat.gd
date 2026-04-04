@@ -87,4 +87,3 @@ func _ready() -> void:
 	__connectTopbar()
 	hidePauseMenu()
 	__devOptionsSetting()
-	

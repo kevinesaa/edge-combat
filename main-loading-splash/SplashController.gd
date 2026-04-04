@@ -7,7 +7,7 @@ extends Node
 @onready var start_next_scene_timer: Timer = $start_next_scene_Timer
 
 func _ready() -> void:
-	
+	print(OS.get_data_dir())
 	createFileIfNotExist(Constants.SAVE_FILE_PATH,JSON.stringify({}))
 	var gameState:Dictionary = self.loadJson(Constants.SAVE_FILE_PATH)
 	var tutorialCompleted = gameState.get(Constants.TUTORIAL_COMPLETED_KEY,false)

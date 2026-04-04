@@ -16,11 +16,18 @@ var elapsed_time := 0.0
 var elapsed_time_at_side := 0.0
 var moving := false
 
+var initTouchAreaName:String = ""
+var endTouchAreaName:String = ""
+
 func on_swipe_listener(input: InputWrapper):
 	if input.endPosition > input.initPosition:
 		start_movement(right_side)
 	if input.initPosition > input.endPosition:
 		start_movement(left_side)
+
+func on_click_listener(input: InputWrapper):
+	print(str("click:", input.endTouchAreaName))
+	
 
 func start_movement(new_target: Vector2):
 	start_position = player_root_node.position
@@ -31,6 +38,7 @@ func start_movement(new_target: Vector2):
 
 func _ready():
 	input.notify_swipe.connect(on_swipe_listener)
+	input.notify_click.connect(on_click_listener)
 
 func _process(delta):
 	if moving:

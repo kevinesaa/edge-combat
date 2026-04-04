@@ -107,6 +107,7 @@ $RECYCLE.BIN/
 .externalNativeBuild
 # Built application files
 *.apk
+*.apk.idsig
 *.ap_
 *.aab
 *.dex

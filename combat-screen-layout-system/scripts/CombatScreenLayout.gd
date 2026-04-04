@@ -14,6 +14,7 @@ var center_screen:Vector2
 @onready var right_down_button_rect_touch_area_node: RectTouchArea = $rightDownButton_rectTouchAreaNode
 
 
+
 func on_resize_screen_listener() -> void:
 	calc_center_screen()
 	setupButtonsPosition()
