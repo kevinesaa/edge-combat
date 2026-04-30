@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cv0y8hteagf7j" path="res://_placeholders/character-portraits/player_portrait.png" id="1_5ypk8"]
 
-[node name="character_portrait_holder_node" type="CenterContainer"]
+[node name="character_portrait_holder_node_centerContainer" type="CenterContainer"]
 offset_right = 52.0
 offset_bottom = 69.0
 size_flags_horizontal = 0
@@ -15,19 +15,68 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="characterContariner_VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="characterPortraitTextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/characterContariner_VBoxContainer"]
+layout_mode = 2
+
+[node name="characterPortraitTextureRect" type="TextureRect" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(48, 32)
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("1_5ypk8")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="characterNameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="selectionMarkContainer_VBoxContainer2" type="VBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="topSelections_HBoxContainer" type="HBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="topLeftSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "P1"
+
+[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="topRigthtSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "P1"
+
+[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="bottomSelections_HBoxContainer" type="HBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="bottomLeftSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "P1"
+
+[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="bottomRigthtSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "P1"
+
+[node name="characterNameLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
