@@ -1,1 +1,7 @@
+class_name CharacterPortraitHolder
 extends Control
+
+
+@onready var characterBackgroundPanel: Panel = $MarginContainer/characterBackgroundPanel
+@onready var characterPortraitImageTextureRect: TextureRect = $MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/characterPortraitTextureRect
+@onready var characterNameLabel: Label = $MarginContainer/characterContariner_VBoxContainer/characterNameLabel
