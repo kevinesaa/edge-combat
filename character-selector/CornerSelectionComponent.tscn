@@ -1,17 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://bwcjyi3pvvw6i"]
 
-[sub_resource type="GDScript" id="GDScript_kctak"]
-script/source = "class_name ConenerSelectionComponent
-extends Node
-
-var isSelected:bool = false
-@onready var backgroundPanel: Panel = $backgroundPanel
-@onready var textLabel: Label = $textLabel
-"
+[ext_resource type="Script" uid="uid://o3m70byqlbg1" path="res://character-selector/CornerSelectionComponent.gd" id="1_wajwj"]
 
 [node name="CornerSelectionComponent" type="MarginContainer"]
 size_flags_vertical = 4
-script = SubResource("GDScript_kctak")
+script = ExtResource("1_wajwj")
 
 [node name="backgroundPanel" type="Panel" parent="."]
 layout_mode = 2

@@ -44,18 +44,16 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="CornerSelectionComponent" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer" instance=ExtResource("3_h5a0h")]
+[node name="topLeftCornerSelectionComponent" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer" instance=ExtResource("3_h5a0h")]
 layout_mode = 2
-script = null
 
 [node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="CornerSelectionComponent2" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer" instance=ExtResource("3_h5a0h")]
+[node name="topRightCornerSelectionComponent" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer" instance=ExtResource("3_h5a0h")]
 layout_mode = 2
-script = null
 
 [node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2"]
 layout_mode = 2
@@ -65,18 +63,16 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="CornerSelectionComponent" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer" instance=ExtResource("3_h5a0h")]
+[node name="bottomLeftCornerSelectionComponent" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer" instance=ExtResource("3_h5a0h")]
 layout_mode = 2
-script = null
 
 [node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="CornerSelectionComponent2" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer" instance=ExtResource("3_h5a0h")]
+[node name="bottomRightCornerSelectionComponent" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer" instance=ExtResource("3_h5a0h")]
 layout_mode = 2
-script = null
 
 [node name="characterNameLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer"]
 custom_minimum_size = Vector2(0, 16)
