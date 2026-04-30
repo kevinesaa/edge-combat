@@ -15,14 +15,17 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
+[node name="characterBackgrountPanel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+
 [node name="characterContariner_VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/characterContariner_VBoxContainer"]
+[node name="portraitMarginContainer" type="MarginContainer" parent="MarginContainer/characterContariner_VBoxContainer"]
 layout_mode = 2
 
-[node name="characterPortraitTextureRect" type="TextureRect" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer"]
+[node name="characterPortraitTextureRect" type="TextureRect" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer"]
 custom_minimum_size = Vector2(48, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -31,50 +34,88 @@ texture = ExtResource("1_5ypk8")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="selectionMarkContainer_VBoxContainer2" type="VBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer"]
+[node name="selectionMarkContainer_VBoxContainer2" type="VBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer"]
 layout_mode = 2
 
-[node name="topSelections_HBoxContainer" type="HBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2"]
+[node name="topSelections_HBoxContainer" type="HBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="topLeftSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
+[node name="topLeftMarginContainer" type="MarginContainer" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer/topLeftMarginContainer"]
+layout_mode = 2
+
+[node name="topLeftSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer/topLeftMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 9
 text = "P1"
+vertical_alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="topRigthtSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
+[node name="topRigthMarginContainer" type="MarginContainer" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer/topRigthMarginContainer"]
+layout_mode = 2
+
+[node name="topRigthtSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer/topRigthMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 9
 text = "P1"
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2"]
+[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="bottomSelections_HBoxContainer" type="HBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2"]
+[node name="bottomSelections_HBoxContainer" type="HBoxContainer" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="bottomLeftSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
+[node name="bottomLeftMarginContainer" type="MarginContainer" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer/bottomLeftMarginContainer"]
+layout_mode = 2
+
+[node name="bottomLeftSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer/bottomLeftMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 9
 text = "P1"
+vertical_alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="bottomRigthtSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/MarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
+[node name="bottomRigthMarginContainer" type="MarginContainer" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer/bottomRigthMarginContainer"]
+layout_mode = 2
+
+[node name="bottomRigthtSelectionLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer/bottomRigthMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 9
 text = "P1"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="characterNameLabel" type="Label" parent="MarginContainer/characterContariner_VBoxContainer"]
 custom_minimum_size = Vector2(0, 16)
