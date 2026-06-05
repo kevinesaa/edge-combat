@@ -9,7 +9,7 @@ class PlayerType:
 	static var __idCounter:int = 0
 	var __id:int
 	
-	var __type:PlayerTypeEnum
+	var __type:PlayerTypeWrapper.PlayerTypeEnum
 	var __number:int
 	var __defaultText:String
 	var __fullText:String
@@ -21,7 +21,7 @@ class PlayerType:
 		self.__fullText = str(defultText,number)
 		self.__idCounter = self.__idCounter + 1
 	
-	func getType() -> PlayerTypeEnum:
+	func getType() -> PlayerTypeWrapper.PlayerTypeEnum:
 		return self.__type
 	
 	func getId() -> int:

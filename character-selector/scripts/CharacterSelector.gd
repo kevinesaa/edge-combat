@@ -30,7 +30,7 @@ func on_confirm_character_click_listener() -> void:
 	if(!__settings_config_cpu):
 		var allHumanConfir:bool = (players
 			.filter( __isPerson)
-			.all(func(p): p.isConfirmed())
+			.all(func(p): return p.isConfirmed())
 		)
 		if(allHumanConfir):
 			load_combat_scene()
@@ -47,7 +47,7 @@ func setupParameters() -> void:
 	for p in playerSettings["players"]:
 		var playerObject = PlayerSelectorCorner.PlayerSelectorWrapper.new(p["playerId"],p["cornderId"])
 		players.append(playerObject)
-		
+
 func load_combat_scene():
 	pass
 
@@ -56,7 +56,7 @@ func _ready() -> void:
 	change_scene_controller_node.debug_loading = true
 	
 func __isPlayerTypeEquls(t1:PlayerTypeWrapper.PlayerTypeEnum,t2:PlayerTypeWrapper.PlayerTypeEnum) -> bool:
-		return t1 == t2
+	return t1 == t2
 
 func __isPerson(p:PlayerSelectorCorner.PlayerSelectorWrapper) -> bool:
 	var t =  p.getPlayerType().getType() 
