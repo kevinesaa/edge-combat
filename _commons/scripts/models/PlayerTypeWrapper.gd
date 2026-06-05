@@ -44,6 +44,14 @@ class PlayerType:
 			and self.__id == other.__id
 		)
 		
-		
-static var PLAYER_ONE:PlayerType = PlayerType.new(PlayerTypeEnum.PLAYER,1,"P")
-static var CPU_ONE:PlayerType = PlayerType.new(PlayerTypeEnum.CPU,1,"CPU")
+static var __allTypes:Dictionary[int,PlayerType] = {}
+static  func __buildInstance(type:PlayerTypeEnum,number:int, defultText:String) -> PlayerType:
+	var playerType:PlayerType = PlayerType.new(type,number,defultText)
+	PlayerTypeWrapper.__allTypes[playerType.getId()] = playerType
+	return playerType
+
+static func getById(id:int) -> PlayerType:
+	return PlayerTypeWrapper.__allTypes.get(id)
+
+static var PLAYER_ONE:PlayerType = __buildInstance(PlayerTypeEnum.PLAYER,1,"P")
+static var CPU_ONE:PlayerType = __buildInstance(PlayerTypeEnum.CPU,1,"CPU")

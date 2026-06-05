@@ -30,7 +30,9 @@ func on_training_mode_click_listener() -> void:
 		(change_scene_controller_node
 			.progressing_loading_scene_completed
 			.connect(
-				func():change_scene_controller_node.change_scene({})
+				func():change_scene_controller_node.change_scene({
+					"player_settings":__get_training_mode_settings()
+				})
 			)
 		)
 
@@ -47,3 +49,19 @@ func on_exit_click_listener() -> void:
 func _ready() -> void:
 	super._ready()
 	change_scene_controller_node.debug_loading = true
+
+
+func __get_training_mode_settings():
+	return {
+		"confirm_cpu":true,
+		"players":[
+			{
+				"playerId":PlayerTypeWrapper.PLAYER_ONE.getId(),
+				"cornderId":PlayerSelectorCorner.PlayerSelectorCornerEnum.TOP_LEFT
+			},
+			{
+				"playerId":PlayerTypeWrapper.CPU_ONE.getId(),
+				"cornderId":PlayerSelectorCorner.PlayerSelectorCornerEnum.BOTTOM_RIGHT
+			}
+		]
+	}

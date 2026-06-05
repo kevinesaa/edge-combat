@@ -1,10 +1,12 @@
 class_name CustomScene extends Node
 
-var parameters:Dictionary = {}
+var __parameters:Dictionary = {}
 
-func setParameters(parameters:Dictionary):
-	self.parameters = parameters
+func setParameters(parameters:Dictionary) -> void:
+	self.__parameters = parameters
 
+func getParameters() -> Dictionary:
+	return self.__parameters
 
 func setupParameters() -> void:
 	

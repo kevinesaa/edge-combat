@@ -2,6 +2,7 @@ class_name CharacterPortraitHolder
 extends Control
 
 
+
 @onready var characterBackgroundPanel: Panel = $MarginContainer/characterBackgroundPanel
 @onready var characterPortraitImageTextureRect: TextureRect = $MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/characterPortraitTextureRect
 @onready var characterNameLabel: Label = $MarginContainer/characterContariner_VBoxContainer/characterNameLabel
@@ -10,3 +11,20 @@ extends Control
 @onready var topRightCornerSelectionComponent: CornerSelectionComponent = $MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/topSelections_HBoxContainer/topRightCornerSelectionComponent
 @onready var bottomLeftCornerSelectionComponent: CornerSelectionComponent = $MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer/bottomLeftCornerSelectionComponent
 @onready var bottomRightCornerSelectionComponent: CornerSelectionComponent = $MarginContainer/characterContariner_VBoxContainer/portraitMarginContainer/selectionMarkContainer_VBoxContainer2/bottomSelections_HBoxContainer/bottomRightCornerSelectionComponent
+
+
+var __cornerSelectionArray:Array[CornerSelectionComponent]
+
+
+func _ready() -> void:
+	topLeftCornerSelectionComponent.setCornerId(PlayerSelectorCorner.PlayerSelectorCornerEnum.TOP_LEFT)
+	topRightCornerSelectionComponent.setCornerId(PlayerSelectorCorner.PlayerSelectorCornerEnum.TOP_RIGTH)
+	bottomLeftCornerSelectionComponent.setCornerId(PlayerSelectorCorner.PlayerSelectorCornerEnum.BOTTOM_LEFT)
+	bottomRightCornerSelectionComponent.setCornerId(PlayerSelectorCorner.PlayerSelectorCornerEnum.BOTTOM_RIGHT)
+	__cornerSelectionArray = [
+		topLeftCornerSelectionComponent,
+		topRightCornerSelectionComponent,
+		bottomLeftCornerSelectionComponent,
+		bottomRightCornerSelectionComponent
+	]
+	

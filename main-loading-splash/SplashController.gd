@@ -12,7 +12,7 @@ func _ready() -> void:
 	var gameState:Dictionary = self.loadJson(Constants.SAVE_FILE_PATH)
 	var tutorialCompleted = gameState.get(Constants.TUTORIAL_COMPLETED_KEY,false)
 	if (tutorialCompleted):
-		change_scene_controller_node.path_to_next_scene = mainMenuPathScene	
+		change_scene_controller_node.path_to_next_scene = mainMenuPathScene
 	else:
 		change_scene_controller_node.path_to_next_scene = firstCombatPathScena
 	start_next_scene_timer.start()

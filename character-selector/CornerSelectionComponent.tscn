@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bwcjyi3pvvw6i"]
 
-[ext_resource type="Script" uid="uid://o3m70byqlbg1" path="res://character-selector/CornerSelectionComponent.gd" id="1_wajwj"]
+[ext_resource type="Script" uid="uid://o3m70byqlbg1" path="res://character-selector/scripts/CornerSelectionComponent.gd" id="1_wajwj"]
 
 [node name="CornerSelectionComponent" type="MarginContainer"]
 size_flags_vertical = 4

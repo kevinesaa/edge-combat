@@ -48,7 +48,7 @@ func load_next_scene() -> void:
 
 
 func change_scene(parameters:Dictionary = {}) -> void:
-	var resource = ResourceLoader.load_threaded_get(path_to_next_scene) as PackedScene
+	var resource = ResourceLoader.load_threaded_get(self.path_to_next_scene) as PackedScene
 	var scene = resource.instantiate() as CustomScene
 	scene.setParameters(parameters)
 	get_tree().current_scene.queue_free()
@@ -57,7 +57,7 @@ func change_scene(parameters:Dictionary = {}) -> void:
 	
 	
 func load_package_scene() -> void:
-	ResourceLoader.load_threaded_request(path_to_next_scene)
+	ResourceLoader.load_threaded_request(self.path_to_next_scene)
 
 func loading_status_update(delta_time:float) -> void:
 	

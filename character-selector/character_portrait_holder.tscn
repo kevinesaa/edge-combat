@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c7nk1hxhavktb"]
 
 [ext_resource type="Texture2D" uid="uid://cv0y8hteagf7j" path="res://_placeholders/character-portraits/player_portrait.png" id="1_5ypk8"]
-[ext_resource type="Script" uid="uid://qjp660257vpx" path="res://character-selector/CharacterPortraitHolder.gd" id="1_7hyp5"]
+[ext_resource type="Script" uid="uid://qjp660257vpx" path="res://character-selector/scripts/CharacterPortraitHolder.gd" id="1_7hyp5"]
 [ext_resource type="PackedScene" uid="uid://bwcjyi3pvvw6i" path="res://character-selector/CornerSelectionComponent.tscn" id="3_h5a0h"]
 
 [node name="character_portrait_holder_node_centerContainer" type="CenterContainer"]
